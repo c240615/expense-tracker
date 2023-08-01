@@ -1,25 +1,22 @@
 const express = require("express");
+const exphbs = require("express-handlebars");
 const app = express();
-const PORT = 3000;
-
-const mongoose = require("mongoose");
-if(process.env.MONGODB_URI !== "production"){
-  require("dotenv").config()
+const port = process.env.PORT || "3000";
+const Record = require("./models/record");
+// 資料庫
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
-mongoose.connect(process.env.MONGODB_URI);
-const db =mongoose.connection
-db.once('open',()=>{
-  console.log("db open")
-})
-db.on('error',()=>{
-  console.log("db error")
-})
-
+require("./config/mongoose");
+// hbs
+app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: ".hbs" }));
+app.set("view engine", "hbs");
+// router
 
 app.get("/", (req, res) => {
-  res.send("homepage");
+  res.render('index');
 });
 
-app.listen(PORT, () => {
-  console.log(`Running on http://localhost:${PORT}/`);
+app.listen(port, () => {
+  console.log(`Running on http://localhost:${port}/`);
 });
