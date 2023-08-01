@@ -1,7 +1,80 @@
-<ul>
-  {{#each records}}
-    <li>
-      {{this.name}}
-    </li>
-  {{/each}}
-</ul>
+<div class="container">
+  <div class="row align-items-center mb-3 m-5 justify-content-center">    
+    <div class="col-6">
+      <table class="table table-striped table-hover">
+        <!-- 選擇輸入框 -->     
+        <form class="d-flex flex-row" action="/search" method="POST">        
+          <select class="form-select col" id="search" name="search" onchange="this.form.submit()">
+            <!--{{#if records.categoryName}}-->
+            <option value="" hidden="hidden" selected="selected">
+              <!--{{records.categoryName}}-->
+            </option>
+            <!--{{else}}-->
+            <option value="類別" hidden="hidden" selected="selected">
+              類別
+            </option>
+            <!--{{/if}}-->
+            <option value="所有類別">所有類別</option>
+            <option value="家居物業">家居物業</option>
+            <option value="交通出行">交通出行</option>
+            <option value="休閒娛樂">休閒娛樂</option>
+            <option value="餐飲食品">餐飲食品</option>
+            <option value="其他">其他</option>
+          </select>
+        </form>
+        <!--總金額-->
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+              <p class="m-3">總金額:</p>              
+            </div>
+            <div class="col">
+              <h1 class="m-3">{{totalAmount}}</h1>              
+            </div>
+          </div>
+
+          <div class="row">  
+          </div>
+        </div>        
+      </table>
+      <!--清單-->
+      <ul class="list-group">
+        {{#each records}}
+          <li class="list-group-item justify-content-between align-items-start">            
+            <div class="row align-items-center ">
+              <div class="col">
+                <i class="fa-solid fa-house justify-content-end"></i>
+              </div>
+              <div class="col">                
+                  {{this.name}}<br>
+                  {{this.date}}                      
+              </div>              
+              <div class="col">
+                NT${{this.amount}}
+              </div>
+              <!--按鈕-->
+              <div class="col d-flex justify-content-md-end  m-3">
+                <a href="./records/{{ this._id }}/edit"><button
+                    class="btn btn-outline-success btn-sm m-1">Edit</button></a>              
+                <form action="/records/{{this._id}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-outline-danger btn-sm m-1">Delete</button>
+                </form>
+              </div> 
+
+            </div>
+          </li>         
+        {{/each}}
+      </ul>
+
+      <!--新增按鈕-->
+      <div class="d-grid gap-2 m-auto d-flex justify-content-center">
+        <a
+          class="btn btn-secondary col-3 mt-4"
+          href="/records/new"
+          role="button"
+        >新增支出</a></div>
+      </div>
+
+    </div>
+  </div>
+</div>

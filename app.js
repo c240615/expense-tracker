@@ -16,14 +16,18 @@ app.set("view engine", "hbs");
 // router
 app.get("/", (req, res) => {
   let totalAmount = 0;
-  
-  Record.find()
-    .lean() // 轉換 Model 物件
+  const userId = req.user._id;
+  Record.find({ userId })
+    .lean()
     .sort({ date: "desc" })
     .then((records) => {
-      res.render("index", { records });
+      res.render("index", { records, totalAmount });
     })
     .catch((err) => console.log(err));
+});
+
+app.get("/records/new",(req,res)=>{
+res.render("new")
 });
 
 app.listen(port, () => {
