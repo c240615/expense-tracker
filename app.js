@@ -43,6 +43,9 @@ app.get("/", (req, res) => {
 app.get("/users/login", (req,res) => {
   res.render("login")
 });
+app.get("/users/register", (req, res) => {
+  res.render("register");
+});
 // 搜尋不同類別的支出
 //app.post("/search", () => {});
 // 新增紀錄頁面
