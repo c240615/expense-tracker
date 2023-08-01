@@ -12,6 +12,54 @@ const db = require("../../config/mongoose");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
+db.once("open", () => {
+  Promise.all(
+    userData.map((eachUser, recordIndex) => {
+      return bcrypt
+        .genSalt(10)
+        .then((salt) => bcrypt.hash(eachUser.password, salt))
+        .then((hash) =>
+          User.create({
+            name: eachUser.name,
+            email: eachUser.email,
+            password: hash,
+          })
+        )
+        .then((user) => {
+          // console.log("user created!");
+          const userRecord = [];
+          // db 自建
+          const userId = user._id;
+          // 用 todo : 0,1,2,4  3 建立單筆 record
+          const record = eachUser.todo.map((recordIndex) => {
+            recordData[recordIndex].userId = userId;
+            return recordData[recordIndex];
+          });
+
+          return Promise.all(
+            record.map((record) => {
+              return Category.findOne({ name: record.category })
+                .lean()
+                .then((category) => {
+                  record.categoryId = category._id;
+                  userRecord.push(record);
+                });
+            })
+          ).then(() => {
+            // console.log("create record");
+            return Record.create(userRecord);
+          });
+        });
+    })
+  )
+    .then(() => {
+      console.log("categoryId created!");
+      process.exit();
+    })
+    .catch((err) => console.log(err));
+});
+
 /*
 db.once("open", () => {
   return Promise.all(
@@ -49,47 +97,3 @@ db.once("open", () => {
   console.log("record created!");
   process.exit();
 });*/
-
-db.once("open", () => {
-  Promise.all(
-    userData.map((eachUser, recordIndex) => {
-      return bcrypt
-        .genSalt(10)
-        .then((salt) => bcrypt.hash(eachUser.password, salt))
-        .then((hash) =>
-          User.create({
-            name: eachUser.name,
-            email: eachUser.email,
-            password: hash,
-          })
-        )
-        .then((user) => {
-          console.log("seed created!");
-          const userRecord = [];
-          const userId = user._id;// db 自建
-          const record = eachUser.todo.map((recordIndex) => {
-            recordData[recordIndex].userId = userId;
-            return recordData[recordIndex];
-          })
-          return Promise.all(
-            record.map((record) => {
-              return Category.findOne({ name: record.category })
-                .lean()
-                .then((category) => {
-                  record.categoryId = category._id;
-                  userRecord.push(record);
-                });
-            })
-          ).then(() => {
-            console.log("start to create record");
-            return Record.create(userRecord);
-          });
-        });
-    })
-  )
-    .then(() => {
-      console.log("category created!");
-      process.exit();
-    })
-    .catch((err) => console.log(err));
-});
