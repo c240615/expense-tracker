@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || "3000";
 const Category = require("./models/category");
 const Record = require("./models/record");
+const User = require("./models/user");
 // 資料庫
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -40,11 +41,49 @@ app.get("/", (req, res) => {
     });
 });
 // login
-app.get("/users/login", (req,res) => {
-  res.render("login")
+app.get("/users/login", (req, res) => {
+  res.render("login");
+});
+app.post("/users/login", (req, res) => {
+  res.render("login");
 });
 app.get("/users/register", (req, res) => {
   res.render("register");
+});
+app.post("/users/register", (req, res) => {
+  // 取得註冊表單參數
+  const { name, email, password, comfirmPassword } = req.body;
+  // 檢查使用者是否已經註冊
+  User.findOne({ email }).then((user) => {
+    if (user) {
+      console.log("User already exists.");
+      res.render("register", {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+    } else {
+      User.create({
+        name,
+        email,
+        password,
+      })
+        .then(() => {
+          res.render("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    // 如果已經註冊：退回原本畫面
+  });
+});
+app.get("/logout", (req, res) => {
+  req.logout();
+  //req.flash("success_msg", "成功登出");
+  res.redirect("/users/login");
 });
 // 搜尋不同類別的支出
 //app.post("/search", () => {});
