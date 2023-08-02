@@ -1,5 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || "3000";
 const Category = require("./models/category");
@@ -20,7 +21,7 @@ app.use(express.static("public"));
 // methodoverride
 //app.use(methodOverride("_method"));
 // body-parser
-//app.use(bodyParser.urlencode({etended}))
+app.use(bodyParser.urlencoded({ extended: true }));
 // 首頁
 app.get("/", (req, res) => {
   let totalAmount = 0;
@@ -61,7 +62,7 @@ app.post("/users/register", (req, res) => {
         name,
         email,
         password,
-        confirmPassword,
+        comfirmPassword,
       });
     } else {
       User.create({
@@ -70,7 +71,7 @@ app.post("/users/register", (req, res) => {
         password,
       })
         .then(() => {
-          res.render("/");
+          res.render("index");
         })
         .catch((err) => {
           console.log(err);
