@@ -5,7 +5,7 @@ const Record = require("../../models/record");
 const Category = require("../../models/category");
 
 // 首頁
-/*router.get("/", (req, res) => {
+router.get("/", (req, res) => {
   let totalAmount = 0;
   // 從 Category 中
   Category.find()
@@ -22,5 +22,6 @@ const Category = require("../../models/category");
         })
         .catch((err) => console.log(err));
     });
-});*/
+});
+// 搜尋
 module.exports = router;

@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session')
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const app = express();
@@ -16,6 +17,14 @@ require("./config/mongoose");
 // hbs
 app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: ".hbs" }));
 app.set("view engine", "hbs");
+// session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 // 靜態檔
 app.use(express.static("public"));
 // methodoverride
@@ -53,7 +62,7 @@ app.get("/users/register", (req, res) => {
 });
 app.post("/users/register", (req, res) => {
   // 取得註冊表單參數
-  const { name, email, password, comfirmPassword } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
   // 檢查使用者是否已經註冊
   User.findOne({ email }).then((user) => {
     if (user) {
@@ -62,7 +71,7 @@ app.post("/users/register", (req, res) => {
         name,
         email,
         password,
-        comfirmPassword,
+        confirmPassword,
       });
     } else {
       User.create({
