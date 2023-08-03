@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
 const app = express();
 const port = process.env.PORT || 3000;
 // 資料庫
@@ -27,11 +28,8 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 // passport
 usePassport(app);
-// 靜態檔
-// app.use(express.static("public"));
-// methodoverride
-//app.use(methodOverride("_method"));
-
+// flash
+app.use(flash());
 // authennticate
 app.use((req, res, next) => {
   // console.log(req.user);
@@ -39,10 +37,20 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   // 把使用者資料交接給 res 使用
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
+  
 });
+// 靜態檔
+// app.use(express.static("public"));
+// methodoverride
+//app.use(methodOverride("_method"));
+
+
 // route
 app.use(routes);
+
 app.listen(port, () => {
   console.log(`Running on http://localhost:${port}/`);
 });

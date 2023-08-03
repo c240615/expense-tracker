@@ -3,23 +3,17 @@
     <div class="col-6">
       <table class="table table-striped table-hover">
         <!-- 選擇輸入框 -->     
-        <form class="d-flex flex-row" action="/search" method="POST">        
-          <select class="form-select col" id="search" name="search" onchange="this.form.submit()">
-            <!--{{#if records.categoryName}}-->
-            <option value="" hidden="hidden" selected="selected">
-              <!--{{records.categoryName}}-->
-            </option>
-            <!--{{else}}-->
-            <option value="類別" hidden="hidden" selected="selected">
-              類別
-            </option>
-            <!--{{/if}}-->
-            <option value="所有類別">所有類別</option>
-            <option value="家居物業">家居物業</option>
-            <option value="交通出行">交通出行</option>
-            <option value="休閒娛樂">休閒娛樂</option>
-            <option value="餐飲食品">餐飲食品</option>
-            <option value="其他">其他</option>
+        <form class="d-flex flex-row" action="/search" method="GET">        
+          <select class="form-select col" id="search" name="search" onchange="this.form.submit()">            
+            <option value="全部">全部</option>
+                          
+              <option value="家居物業">家居物業</option>
+              <option value="交通出行">交通出行</option>
+              <option value="休閒娛樂">休閒娛樂</option>
+              <option value="餐飲食品">餐飲食品</option>
+              <option value="其他">其他</option>    
+         
+           
           </select>
         </form>
         <!--總金額-->
