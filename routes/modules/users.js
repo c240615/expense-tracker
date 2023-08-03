@@ -14,7 +14,7 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/users/login",
-    //failureFlash: true,
+    failureFlash: true,
   })
 );
 // 註冊頁
@@ -25,7 +25,9 @@ router.get("/register", (req, res) => {
 router.post("/register", (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body;
+  // flash
   const errors = [];
+  // 其一錯誤
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: "所有欄位都是必填。" });
   }
@@ -45,35 +47,34 @@ router.post("/register", (req, res) => {
   User.findOne({ email }).then((user) => {
     if (user) {
       errors.push({ message: "這個信箱已經註冊過了。" });
-      res.render("register", {
+      return res.render("register", {
         errors,
         name,
         email,
         password,
         confirmPassword,
       });
-    } else {
-      User.create({
-        name,
-        email,
-        password,
-      })
-        .then(() => {
-          res.render("index");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     }
+    return User.create({      
+      name,
+      email,
+      password,
+    })
+      .then(() => {
+        res.render("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     // 如果已經註冊：退回原本畫面
   });
 });
 // 登出
 router.get("/logout", (req, res) => {
-  req.logout(function(err) {
-    if (err) { return next(err); }})
-  req.flash("success_msg", "成功登出");
-  res.redirect("/users/login");
-  
+  req.logout((e) => {
+    req.flash("success_msg", "成功登出");
+    res.redirect("/users/login");
+  });
 });
 module.exports = router;
