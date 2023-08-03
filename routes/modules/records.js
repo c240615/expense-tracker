@@ -60,17 +60,18 @@ router.get("/:id/edit", (req, res) => {
 router.put("/:id", (req, res) => {
   const userId = req.user._id;
   const _id = req.params.id; // // record 的 id
-  const { name, date, amount, category } = req.body;  
+  const { name, date, amount, category } = req.body;
   // console.log(category);
-  
-  Record.findByIdAndUpdate({ _id, userId },{
-        name,
-        date,
-        amount,
-        userId,
-        categoryId: category
-      })
-    
+  Record.findByIdAndUpdate(
+    { _id, userId },
+    {
+      name,
+      date,
+      amount,
+      userId,
+      categoryId: category,
+    }
+  )
     .then(() => {
       res.redirect("/");
     })

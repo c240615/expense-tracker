@@ -35,13 +35,10 @@ usePassport(app);
 app.use(flash());
 // authennticate
 app.use((req, res, next) => {
-  // console.log(req.user);
-  // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用 , req.locals => 所有樣板都可以使用的變數
   res.locals.isAuthenticated = req.isAuthenticated();
-  // 把使用者資料交接給 res 使用
   res.locals.user = req.user;
-  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
-  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.warning_msg = req.flash("warning_msg");
   next();
 });
 // route
