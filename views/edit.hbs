@@ -1,10 +1,10 @@
 <div class="container my-5">
   <div class="row d-flex flex-column align-items-center">
-    <form class="col-4" action="/records" method="post">
+    <form class="col-4" action="/records/{{ record._id }}?_method=PUT" method="post">
 
       <div class="mb-4 d-flex flex-row row">
         <p class="col-4 text-danger fw-light m-0">*必填欄位</p>
-        <p class="col m-0 text-center">請輸入你的支出</p>
+        <p class="col m-0 text-center">請編輯你的支出</p>
       </div>
       <div class="mb-3 d-flex flex-row row">
         <label
@@ -78,7 +78,7 @@
         <button
           type="submit"
           class="btn btn-secondary col-6 mt-3"
-        >新增支出</button>
+        >修改支出</button>
       </div>
 
     </form>

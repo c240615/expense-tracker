@@ -17,6 +17,7 @@ router.post("/", (req, res) => {
   Category.findOne({ name: category })
     .lean()
     .then((data) => {
+      console.log(data._id);
       return Record.create({
         name,
         date,
@@ -34,11 +35,12 @@ router.post("/", (req, res) => {
 });
 // 編輯頁
 router.get("/:id/edit", (req, res) => {
-  const userId = req.user._id;
-  const _id = req.params.id;
+  const userId = req.user._id; // user 的 id
+  const _id = req.params.id; // record 的 id
   Category.find()
     .lean()
     .then((categories) => {
+      // console.log(categories);
       return Record.findById({ _id, userId })
         .lean()
         .then((record) => {
@@ -48,13 +50,34 @@ router.get("/:id/edit", (req, res) => {
             } else {
               category.selected = false;
             }
-          });          
+          });
           return res.render("edit", { record, categories });
         })
         .catch((err) => console.log(err));
     });
 });
-//router.put('/:id',(req, res)=>{})
+// 提交編輯
+router.put("/:id", (req, res) => {
+  const userId = req.user._id;
+  const _id = req.params.id; // // record 的 id
+  const { name, date, amount, category } = req.body;  
+  // console.log(category);
+  
+  Record.findByIdAndUpdate({ _id, userId },{
+        name,
+        date,
+        amount,
+        userId,
+        categoryId: category
+      })
+    
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
 
 // 刪除
 router.delete("/:id", (req, res) => {
