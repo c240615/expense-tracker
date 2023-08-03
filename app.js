@@ -1,5 +1,5 @@
 const express = require("express");
-const session = require('express-session')
+const session = require("express-session");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const app = express();
@@ -32,6 +32,16 @@ usePassport(app);
 // methodoverride
 //app.use(methodOverride("_method"));
 
+// authennticate
+app.use((req, res, next) => {
+  // console.log(req.user);
+  // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用 , req.locals => 所有樣板都可以使用的變數
+  res.locals.isAuthenticated = req.isAuthenticated();
+  // 把使用者資料交接給 res 使用
+  res.locals.user = req.user;
+  next();
+});
+// route
 app.use(routes);
 app.listen(port, () => {
   console.log(`Running on http://localhost:${port}/`);

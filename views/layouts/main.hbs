@@ -11,15 +11,16 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <!--{{#if isAuthenticated}}{{user.name}}'s {{/if}}
-         <form class="d-flex" role="search">
-          {{#if isAuthenticated}}
-            <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
-          {{else}}
-            <a href="/users/login" class="btn btn-outline-dark">Login</a>
-          {{/if}}          
-        </form>-->
-        <a class="navbar-brand" href="#">記帳本</a>
+        {{#if isAuthenticated}}
+         {{ user.name}} ' s
+        {{/if}}
+        <a class="navbar-brand p-2" href="#">記帳本</a>
+        {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+        {{else}}
+          <a href="/users/login" class="btn btn-outline-light">Login</a>
+        {{/if}}        
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

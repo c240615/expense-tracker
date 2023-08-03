@@ -48,7 +48,6 @@ router.post("/register", (req, res) => {
           console.log(err);
         });
     }
-
     // 如果已經註冊：退回原本畫面
   });
 });
@@ -57,7 +56,7 @@ router.post("/register", (req, res) => {
 // 修改
 // 刪除
 router.get("/logout", (req, res) => {
-  //req.logout();
+  req.logout();
   //req.flash("success_msg", "成功登出");
   res.redirect("/users/login");
 });
