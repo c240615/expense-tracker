@@ -11,12 +11,12 @@ router.get("/new", (req, res) => {
 // 提交新 record
 router.post("/", (req, res) => {
   const userId = req.user._id;
-  console.log(userId);
-  const { name, date, amount, category } = req.body;  
-  console.log(req.body);  
+  // console.log(userId);
+  const { name, date, amount, category } = req.body;
+  // console.log(req.body);
   Category.findOne({ name: category })
     .lean()
-    .then((data) => {      
+    .then((data) => {
       return Record.create({
         name,
         date,
@@ -24,18 +24,45 @@ router.post("/", (req, res) => {
         categoryId: data._id,
         userId,
       });
-    }).then(()=>{
+    })
+    .then(() => {
       res.redirect("/");
     })
     .catch((e) => {
       console.log(e);
     });
 });
-// 
+// 編輯頁
 router.get("/:id/edit", (req, res) => {
-  res.render('edit')
+  const userId = req.user._id;
+  const _id = req.params.id;
+  Category.find()
+    .lean()
+    .then((categories) => {
+      return Record.findById({ _id, userId })
+        .lean()
+        .then((record) => {
+          categories.forEach((category) => {
+            if (String(category._id) === String(record.categoryId)) {
+              category.selected = true;
+            } else {
+              category.selected = false;
+            }
+          });          
+          return res.render("edit", { record, categories });
+        })
+        .catch((err) => console.log(err));
+    });
 });
-// router.put('/:id',(req, res)=>{})
-// router.delete('/:id',(req, res)=>{})
+//router.put('/:id',(req, res)=>{})
+
+// 刪除
+router.delete("/:id", (req, res) => {
+  const userId = req.user._id;
+  const _id = req.params.id;
+  return Record.findByIdAndDelete({ _id, userId })
+    .then(() => res.redirect("/"))
+    .catch((err) => console.log(err));
+});
 
 module.exports = router;

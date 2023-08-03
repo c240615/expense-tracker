@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -26,6 +27,8 @@ app.use(
 );
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
+// methodoverride
+app.use(methodOverride("_method"));
 // passport
 usePassport(app);
 // flash
@@ -40,14 +43,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
   res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
-  
 });
-// 靜態檔
-// app.use(express.static("public"));
-// methodoverride
-//app.use(methodOverride("_method"));
-
-
 // route
 app.use(routes);
 
