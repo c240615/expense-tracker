@@ -20,14 +20,18 @@
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
-          {{#if isAuthenticated}}{{user.name}}的{{/if}}記帳本
+          {{#if isAuthenticated}}
+            {{user.name}}
+            ' s
+          {{/if}}
+          記帳本
         </a>
         <form class="d-flex" role="search">
           {{#if isAuthenticated}}
             <a class="btn btn-outline-danger" href="/users/logout">登出</a>
           {{else}}
             <a class="btn btn-outline-success" href="/users/login">登入</a>
-          {{/if}}          
+          {{/if}}
         </form>
       </div>
     </nav>

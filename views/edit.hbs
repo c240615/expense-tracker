@@ -50,7 +50,6 @@
           name="category"
           required
         >
-
           {{#each categories}}
             <option value="{{ this._id }}" {{#if this.selected}}selected{{/if}}>{{ this.name }}</option>
           {{/each}}
