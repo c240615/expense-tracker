@@ -44,31 +44,34 @@ router.post("/register", (req, res) => {
     });
   }
   // 檢查使用者是否已經註冊
-  User.findOne({ email }).then((user) => {
-    if (user) {
-      errors.push({ message: "這個信箱已經註冊過了。" });
-      return res.render("register", {
-        errors,
-        name,
-        email,
-        password,
-        confirmPassword,
-      });
-    }
-    return User.create({      
-      name,
-      email,
-      password,
-    })
-      .then(() => {
-        res.render("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  User.findOne({ email })
+    .then((user) => {
+      // 如果已經註冊過，返回註冊頁面
+      if (user) {
+        errors.push({ message: "這個 Email 已經註冊過了。" });
+        res.render("register", {
+          errors,
+          name,
+          email,
+          password,
+          confirmPassword,
+        });
+      }
 
-    // 如果已經註冊：退回原本畫面
-  });
+      return bcrypt
+        .genSalt(10) // 產生「鹽」，並設定複雜係數為 10
+        .then((salt) => bcrypt.hash(password, salt)) // 為使用者加鹽，產生雜湊值
+        .then((hash) =>
+          User.create({
+            name,
+            email,
+            password: hash,
+          })
+        )
+        .then(() => res.redirect("/"))
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 });
 // 登出
 router.get("/logout", (req, res) => {
