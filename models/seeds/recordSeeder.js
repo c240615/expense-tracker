@@ -59,3 +59,36 @@ db.once("open", () => {
     })
     .catch((err) => console.log(err));
 });
+
+/*
+db.once("open", () => {
+  userData.map((eachUser) => {
+    return bcrypt
+      .genSalt(10)
+      .then((salt) => bcrypt.hash(eachUser.password, salt))
+      .then((hash) =>
+        User.create({
+          user: eachUser.name,
+          email: eachUser.email,
+          password: hash,
+        })
+      )
+      .then((user) => {
+        return Promise.all(
+          Array.from(recordList, async (record) => {
+            record.userId = user._id;
+            const category = await Category.findOne({
+              name: record.category,
+            }).lean();
+            record.categoryId = category._id;
+            await Record.create(record);
+          })
+        ).catch((err) => console.log(err));
+      })
+      .then(() => {
+        console.log("done");
+        process.exit();
+      })
+      .catch((err) => console.log(err));
+  });
+});*/

@@ -5,7 +5,7 @@
         <!-- 選擇輸入框 -->     
         <form class="d-flex flex-row" action="/search" method="GET">        
           <select class="form-select col" id="category" name="category" onchange="this.form.submit()">
-            <option value="">全部</option>
+            <option value="">全部</option>            
             {{#each categories}}
               <option value="{{ this._id }}" {{#if this.selected}}
                 selected
