@@ -1,5 +1,4 @@
 # expense-tracker
-![image](C:\programs\Express\3\expense-tracker\public\img\index.PNG)
 
 ## 介紹
 這是一個可以註冊登入帳號，管理支出的記事本
