@@ -30,7 +30,6 @@ router.get("/search", (req, res) => {
   const categoryId = req.query.category;
   const userId = req.user._id;
   let totalAmount = 0;
-  console.log(categoryId);
   if (categoryId) {
     Category.find()
       .lean()

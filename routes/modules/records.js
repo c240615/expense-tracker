@@ -15,7 +15,6 @@ router.post("/", (req, res) => {
   Category.findOne({ name: category })
     .lean()
     .then((data) => {
-      console.log(data._id);
       return Record.create({
         name,
         date,
@@ -58,7 +57,6 @@ router.put("/:id", (req, res) => {
   const userId = req.user._id;
   const _id = req.params.id; // // record 的 id
   const { name, date, amount, category } = req.body;
-  // console.log(category);
   Record.findByIdAndUpdate(
     { _id, userId },
     {

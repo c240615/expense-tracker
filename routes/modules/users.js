@@ -59,7 +59,7 @@ router.post("/register", (req, res) => {
       }
 
       return bcrypt
-        .genSalt(10) // 產生「鹽」，並設定複雜係數為 10
+        .genSalt(10)
         .then((salt) => bcrypt.hash(password, salt))
         .then((hash) =>
           User.create({
