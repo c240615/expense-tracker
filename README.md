@@ -31,17 +31,4 @@ npm run dev
 http://localhost:3000
 ```
 
-## 開發工具  
-- "bcryptjs": "^2.4.3"
-- "body-parser": "^1.20.2"
-- "connect-flash": "^0.1.1"
-- "express": "^4.18.2"
-- "express-handlebars": "^7.1.0"
-- "express-session": "^1.17.3"
-- "method-override": "^3.0.0"
-- "mongoose": "^7.4.1"
-- "passport": "^0.6.0"
-- "passport-facebook": "^3.0.0"
-- "passport-local": "^1.0.0"
-- "dotenv": "^16.3.1"
  

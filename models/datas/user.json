@@ -1,12 +1,12 @@
 [
   {
-    "name": "廣志",
+    "name": "A先生",
     "email": "user1@example.com",
     "password": "12345678",
     "todo":[0,1,2,4]
   },
   {
-    "name": "小新",
+    "name": "B小姐",
     "email": "user2@example.com",
     "password": "12345678",
     "todo": [3]

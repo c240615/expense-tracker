@@ -1,32 +1,32 @@
 [
   {
     "name": "午餐",
-    "date": "2019.4.23",
-    "amount": 60,
-    "category": "餐飲食品"
+    "date": "2024.11.01",
+    "amount": 100,
+    "category": "飲食"
   },
   {
     "name": "晚餐",
-    "date": "2019.4.23",
-    "amount": 60,
-    "category": "餐飲食品"
+    "date": "2024.11.01",
+    "amount": 80,
+    "category": "飲食"
   },
   {
-    "name": "捷運",
-    "date": "2019.4.23",
+    "name": "計程車費",
+    "date": "2024.11.01",
     "amount": 120,
-    "category": "交通出行"
+    "category": "交通"
   },
   {
-    "name": "電影：驚奇隊長",
-    "date": "2019.4.23",
+    "name": "電影票",
+    "date": "2024.11.01",
     "amount": 220,
-    "category": "休閒娛樂"
+    "category": "娛樂"
   },
   {
-    "name": "租金",
-    "date": "2015.4.01",
-    "amount": 25000,
-    "category": "家居物業"
+    "name": "水費",
+    "date": "2024.11.01",
+    "amount": 800,
+    "category": "水電"
   }
 ]

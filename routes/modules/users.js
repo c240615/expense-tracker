@@ -11,8 +11,8 @@ router.get("/login", (req, res) => {
 // 提交登入
 router.post(
   "/login",
-  passport.authenticate("local", {    
-    successRedirect: "/",    
+  passport.authenticate("local", {
+    successRedirect: "/",
     failureRedirect: "/users/login",
     failureFlash: true,
   })
@@ -60,7 +60,7 @@ router.post("/register", (req, res) => {
 
       return bcrypt
         .genSalt(10) // 產生「鹽」，並設定複雜係數為 10
-        .then((salt) => bcrypt.hash(password, salt)) // 為使用者加鹽，產生雜湊值
+        .then((salt) => bcrypt.hash(password, salt))
         .then((hash) =>
           User.create({
             name,

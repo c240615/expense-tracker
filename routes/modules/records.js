@@ -11,9 +11,7 @@ router.get("/new", (req, res) => {
 // 提交新 record
 router.post("/", (req, res) => {
   const userId = req.user._id;
-  // console.log(userId);
   const { name, date, amount, category } = req.body;
-  // console.log(req.body);
   Category.findOne({ name: category })
     .lean()
     .then((data) => {
@@ -40,7 +38,6 @@ router.get("/:id/edit", (req, res) => {
   Category.find()
     .lean()
     .then((categories) => {
-      // console.log(categories);
       return Record.findById({ _id, userId })
         .lean()
         .then((record) => {
